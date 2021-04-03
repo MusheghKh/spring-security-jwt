@@ -4,6 +4,7 @@ import com.example.springsecurityjwt.config.CustomUserDetailService;
 import com.example.springsecurityjwt.config.JwtUtil;
 import com.example.springsecurityjwt.model.AuthenticationRequest;
 import com.example.springsecurityjwt.model.AuthenticationResponse;
+import com.example.springsecurityjwt.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,5 +46,10 @@ public class AuthenticationController {
         final String token = jwtUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(token));
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
+        return ResponseEntity.ok(userDetailService.save(user));
     }
 }
